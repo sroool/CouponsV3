@@ -100,13 +100,9 @@ public class AdminFacade extends ClientFacade {
 			throw new CompanyDoesntExistException("Error: no company with id " + companyId);
 		}
 		coupRepo.deletePurchasesByCompanyId(companyId);
-		System.out.println("done 1");
 		coupRepo.deleteByCompanyId(companyId);
-		System.out.println("done 2");
-		Company comp = compRepo.findById(companyId).orElse(null);
 		
 		compRepo.deleteById(companyId);
-		System.out.println("done 3");
 	}
 
 	/**

@@ -593,7 +593,7 @@ public class Test {
 
 	public static Company randomCompany() {
 		
-		String name = "company " + ((int) (Math.random() * 90000) + 100);
+		String name = "company" + ((int) (Math.random() * 90000) + 100);
 		String email = name + "@gmail.com";
 		String password = name + "123456";
 		Company company = new Company(name, email, password);

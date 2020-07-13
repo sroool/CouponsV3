@@ -1,7 +1,9 @@
 package com.example.CouponsV3.facades;
 
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.context.annotation.Scope;
@@ -11,6 +13,7 @@ import com.example.CouponsV3.beans.Category;
 import com.example.CouponsV3.beans.Coupon;
 import com.example.CouponsV3.beans.Customer;
 import com.example.CouponsV3.exceptions.CouponAlreadyPurchasedException;
+import com.example.CouponsV3.exceptions.CouponDoesntExistException;
 import com.example.CouponsV3.exceptions.CouponExpiredException;
 import com.example.CouponsV3.exceptions.CouponOutOfStockException;
 import com.example.CouponsV3.exceptions.CustomerDoesntExistException;
@@ -137,5 +140,33 @@ public class CustomerFacade extends ClientFacade {
 	 */
 	public Customer getCustomerDetails() {
 		return customer;
+	}
+	
+	public Coupon getCouponById(int id) throws CouponDoesntExistException {
+		Coupon coupon = coupRepo.findById(id).orElse(null);
+		if(coupon == null) {
+			throw new CouponDoesntExistException("Coupon doesnt exist");
+		}
+		return coupon;
+	}
+	
+	public List<Customer> getCustomersByCoupon(int couponId) throws CouponDoesntExistException{
+		Coupon coupon = coupRepo.findById(couponId).orElse(null);
+		if(coupon == null) {
+			throw new CouponDoesntExistException("Coupon doesnt exist");
+		}
+		List<Customer> customers = custRepo.findAll();
+		List<Customer> customersByCoupon = new ArrayList<Customer>();
+		for(Customer c : customers) {
+			for(Coupon coup : c.getCoupons()) {
+				if(coup.getId() == coupon.getId()) {
+					customersByCoupon.add(c);
+				}
+			}
+		}
+		return customersByCoupon;
+	}
+	public List<Coupon> getAllCoupons(){
+		return coupRepo.findAll();
 	}
 }

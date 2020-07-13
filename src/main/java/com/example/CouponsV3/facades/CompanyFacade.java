@@ -57,9 +57,10 @@ public class CompanyFacade extends ClientFacade {
 	 * Accepts an instance of a coupon as an argument and adds it to the database
 	 * 
 	 * @param coupon The instance of the coupon to add to the database
+	 * @return 
 	 * @throws CouponTitleAlreadyExistsException if a coupon with this title already exists
 	 */
-	public void addCoupon(Coupon coupon) throws CouponTitleAlreadyExistsException {
+	public Coupon addCoupon(Coupon coupon) throws CouponTitleAlreadyExistsException {
 		for(Coupon coup : getCompanyCoupons()) { // Get all the company coupons and loop over them
 			/**
 			 * check if the coupon retrieved title the same as the coupon passed as an argument.
@@ -69,34 +70,48 @@ public class CompanyFacade extends ClientFacade {
 				throw new CouponTitleAlreadyExistsException("A coupon with this title already exists");
 			}
 		}
-		coupRepo.save(coupon);// otherwise add the coupon
+		return coupRepo.save(coupon);// otherwise add the coupon
 	}
 	
 	/**
 	 * Accepts an instance of a coupon as an argument and updates it in the database
 	 * 
 	 * @param coupon The instance of the coupon to update in the database
+	 * @return 
 	 * @throws CouponDoesntExistException if a coupon id with this id doesnt exist
 	 * @throws CouponCompanyIdChangedException if a coupon company id change was attempted
+	 * @throws CouponTitleAlreadyExistsException 
 	 */
-	public void updateCoupon(Coupon coupon) throws  CouponCompanyIdChangedException, CouponDoesntExistException {
+	public Coupon updateCoupon(Coupon coupon) throws  CouponCompanyIdChangedException, CouponDoesntExistException, CouponTitleAlreadyExistsException {
 		
-		Optional<Coupon> coup = coupRepo.findById(coupon.getId()); // loads the coupon optional from the database by its id
-		if(coup.isPresent() && coupon.getCompanyId() == coup.get().getCompanyId()) { // check if the coupon company id has been altered 
-			coupRepo.save(coupon); // Update the coupon to the database if not
-		}else {// throw an exception if the coupon company id did change
-			throw new CouponCompanyIdChangedException("Cant change coupon company id from ["+coup.get().getCompanyId()+"] to ["+coupon.getCompanyId()+"]");
+		Coupon coup = coupRepo.findById(coupon.getId()).orElse(null); // loads the coupon optional from the database by its id
+		Coupon coupByTitle = coupRepo.findByTitle(coupon.getTitle()).orElse(null);
+		if(coup == null) {
+			throw new CouponDoesntExistException("Coupon doesnt Exist");
 		}
+		if(coup.getCompanyId() != coupon.getCompanyId()) {			
+			throw new CouponCompanyIdChangedException("Cant change coupon company id from ["+coup.getCompanyId()+"] to ["+coupon.getCompanyId()+"]");
+		}
+		if(coupByTitle != null && coupByTitle.getId() != coupon.getId()) {
+			throw new CouponTitleAlreadyExistsException("A coupon with this title already exists");
+		}
+		return coupRepo.save(coupon); // Update the coupon to the database if not
 	}
 	
 	/**
 	 * Accepts a couponId and deletes it from the database
 	 * 
 	 * @param companyId the id of the coupon to delete
+	 * @throws CouponDoesntExistException 
 	 */
-	public void deleteCoupon(int couponId)  {
+	public void deleteCoupon(int couponId) throws CouponDoesntExistException  {
+		Coupon coupon = coupRepo.findById(couponId).orElse(null);
+		if(coupon == null) {
+			throw new CouponDoesntExistException("Coupon doesnt exist");
+		}
 		coupRepo.deletePurchaseByCouponId(couponId);
 		coupRepo.deleteById(couponId); // delete the coupon
+
 	}
 	/**
 	 * Returns all the company coupons in the database
@@ -135,6 +150,23 @@ public class CompanyFacade extends ClientFacade {
 	 * @throws CompanyDoesntExistException
 	 */
 	public Company getCompanyDetails() {
+		Company company = compRepo.findById(this.company.getId()).orElse(null);
+		if(company != null) {
+			this.company = company;
+		}
 		return this.company;
+	}
+	
+	public List<Customer> getAllClients(){
+		List<Customer> customers = custRepo.findAll();
+		List<Customer> clients = new ArrayList<Customer>();
+		for(Customer customer : customers) {
+			for(Coupon coupon : customer.getCoupons()) {
+				if(coupon.getCompanyId() == this.company.getId()) {
+					clients.add(customer);
+				}
+			}
+		}
+		return clients;
 	}
 }

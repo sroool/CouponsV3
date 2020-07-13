@@ -2,6 +2,7 @@ package com.example.CouponsV3.dao;
 
 import java.sql.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -100,6 +101,7 @@ public interface CouponRepo extends JpaRepository<Coupon, Integer> {
 	@Query(value = "SELECT * FROM coupons d JOIN customers_vs_coupons c ON c.coupon_id=d.id WHERE c.customer_id= ?1 AND d.price <= ?2", nativeQuery = true)
 	Set<Coupon> findByCustomerIdAndMaxprice(int customerId, double maxPrice);
 	
+	Optional<Coupon> findByTitle(String title);
 	/**
 	 * Helper method to reset AI to a certain value
 	 * @param start
