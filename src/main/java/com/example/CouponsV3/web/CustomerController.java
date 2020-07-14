@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.CouponsV3.beans.Category;
 import com.example.CouponsV3.beans.Coupon;
 import com.example.CouponsV3.exceptions.CouponAlreadyPurchasedException;
 import com.example.CouponsV3.exceptions.CouponDoesntExistException;
@@ -34,6 +35,7 @@ public class CustomerController {
 			CustomerFacade facade = (CustomerFacade) sessions.get(token).getClientFacade();
 			return ResponseEntity.ok(facade.getCustomerDetails());
 		}
+		System.out.println("blocked by customer controller");
 		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("UNAUTHORIZED!");
 	}
 
@@ -69,6 +71,11 @@ public class CustomerController {
 		CustomerFacade facade = (CustomerFacade) session.getClientFacade();
 		return ResponseEntity.ok(facade.getAllCoupons());
 	}
+	@PostMapping("/coupons-by-category/{token}")
+	public ResponseEntity<?> getAllCouponsByCategory(@PathVariable String token, @RequestBody Category category){
+		CustomerFacade facade = (CustomerFacade) sessions.get(token).getClientFacade();
+		return ResponseEntity.ok(facade.getAllCouponsByCategory(category));
+	}
 	@PostMapping("/purchase-coupon/{token}")
 	public ResponseEntity<?> purchaseCoupon(@PathVariable String token,@RequestBody Coupon coupon){
 		Session session = sessions.get(token);
@@ -83,4 +90,5 @@ public class CustomerController {
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}
 	}
+	
 }

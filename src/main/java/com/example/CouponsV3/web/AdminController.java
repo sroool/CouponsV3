@@ -37,7 +37,6 @@ public class AdminController {
 
 	@PostMapping("/add-company/{token}")
 	public ResponseEntity<?> addCompany(@PathVariable String token, @RequestBody Company company) {
-		System.out.println(company);
 		try {
 			return ResponseEntity.ok(facade.addCompany(company));
 		} catch (CompanyNameAlreadyExistsException | CompanyEmailAlreadyExistsException e) {

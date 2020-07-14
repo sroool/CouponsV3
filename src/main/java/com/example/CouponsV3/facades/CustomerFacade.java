@@ -170,4 +170,14 @@ public class CustomerFacade extends ClientFacade {
 	public List<Coupon> getAllCoupons(){
 		return coupRepo.findAll();
 	}
+	public List<Coupon> getAllCouponsByCategory(Category category){
+		List<Coupon> allCoupons = coupRepo.findAll();
+		List<Coupon> categoryCoupons = new ArrayList<Coupon>();
+		for(Coupon coup : allCoupons) {
+			if(coup.getCategory().ordinal() == category.ordinal()) {
+				categoryCoupons.add(coup);
+			}
+		}
+		return categoryCoupons;
+	}
 }
