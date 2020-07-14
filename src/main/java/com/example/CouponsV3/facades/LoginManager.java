@@ -31,21 +31,21 @@ public class LoginManager {
 			if(adminF.login(email, password)) {
 				return adminF;
 			}
-			throw new IncorrectCredentialsException();
+			throw new IncorrectCredentialsException(email + "," + password);
 		
 		case Company:
 			CompanyFacade compF = ctx.getBean(CompanyFacade.class);
 			if(compF.login(email, password)) {
 				return compF;
 			}
-			throw new IncorrectCredentialsException();
+			throw new IncorrectCredentialsException(email + "," + password);
 			
 		case Customer:
 			CustomerFacade custF = ctx.getBean(CustomerFacade.class);
 			if(custF.login(email, password)) {
 				return custF;
 			}
-			throw new IncorrectCredentialsException();
+			throw new IncorrectCredentialsException(email + "," + password);
 		}
 		return null;
 	}

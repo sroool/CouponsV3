@@ -8,10 +8,16 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.CouponsV3.beans.Coupon;
+import com.example.CouponsV3.exceptions.CouponAlreadyPurchasedException;
 import com.example.CouponsV3.exceptions.CouponDoesntExistException;
+import com.example.CouponsV3.exceptions.CouponExpiredException;
+import com.example.CouponsV3.exceptions.CouponOutOfStockException;
 import com.example.CouponsV3.facades.CustomerFacade;
 
 @RestController
@@ -62,5 +68,19 @@ public class CustomerController {
 		}
 		CustomerFacade facade = (CustomerFacade) session.getClientFacade();
 		return ResponseEntity.ok(facade.getAllCoupons());
+	}
+	@PostMapping("/purchase-coupon/{token}")
+	public ResponseEntity<?> purchaseCoupon(@PathVariable String token,@RequestBody Coupon coupon){
+		Session session = sessions.get(token);
+		if(session == null) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("UNAUTHORIZED!");
+		}
+		CustomerFacade facade = (CustomerFacade) session.getClientFacade();
+		try {
+			facade.purchaseCoupon(coupon);
+			return ResponseEntity.ok("Purchased!");
+		} catch (CouponAlreadyPurchasedException | CouponOutOfStockException | CouponExpiredException e) {
+			return ResponseEntity.badRequest().body(e.getMessage());
+		}
 	}
 }

@@ -26,7 +26,7 @@ import com.example.CouponsV3.facades.ClientFacade;
 @Service
 @Scope("prototype")
 public class CustomerFacade extends ClientFacade {
-	private Customer customer;
+	private int customerId;
 	
 	/**
 	 * CustomerFacade CTOR
@@ -48,7 +48,7 @@ public class CustomerFacade extends ClientFacade {
 	public boolean login(String email, String password)  {
 		Customer customer = custRepo.findByEmailAndPassword(email, password).orElse(null);
 		if(customer != null) {
-			this.customer = customer;
+			this.customerId = customer.getId();
 			return true;
 		}
 		return false;
@@ -90,10 +90,10 @@ public class CustomerFacade extends ClientFacade {
 		
 		for(Coupon coup : getCustomerCoupons()) {
 			if(coupon.getId() == coup.getId()) {
-				throw new CouponAlreadyPurchasedException("This coupon has already been purchased by this customer");
+				throw new CouponAlreadyPurchasedException("You already bought this coupon!");
 			}
 		}
-		Customer customer = custRepo.findById(this.customer.getId()).orElse(null);
+		Customer customer = custRepo.findById(this.customerId).orElse(null);
 		if(customer != null) {
 			customer.getCoupons().add(coupon);
 			custRepo.save(customer);
@@ -108,7 +108,7 @@ public class CustomerFacade extends ClientFacade {
 	 *  
 	 */
 	public Set<Coupon> getCustomerCoupons()  {
-		Customer customer = custRepo.findById(this.customer.getId()).orElse(null);
+		Customer customer = custRepo.findById(this.customerId).orElse(null);
 		return customer.getCoupons();
 		
 	}
@@ -120,7 +120,7 @@ public class CustomerFacade extends ClientFacade {
 	 *  
 	 */
 	public Set<Coupon> getCustomerCoupons(Category category)  {
-		return coupRepo.findByCustomerIdAndCategory(this.customer.getId(), category.ordinal());
+		return coupRepo.findByCustomerIdAndCategory(this.customerId, category.ordinal());
 	}
 	/**
 	 * Accepts a maxPrice as an argument and returns all the customer coupons with a price up to that value.
@@ -130,7 +130,7 @@ public class CustomerFacade extends ClientFacade {
 	 * @throws 
 	 */
 	public Set<Coupon> getCustomerCoupons(double maxPrice)  {
-		return coupRepo.findByCustomerIdAndMaxprice(this.customer.getId(), maxPrice);
+		return coupRepo.findByCustomerIdAndMaxprice(this.customerId, maxPrice);
 	}
 	/**
 	 * Returns the currently logged in customer
@@ -139,6 +139,7 @@ public class CustomerFacade extends ClientFacade {
 	 * @throws CustomerDoesntExistException 
 	 */
 	public Customer getCustomerDetails() {
+		Customer customer = custRepo.findById(this.customerId).orElse(null);
 		return customer;
 	}
 	
