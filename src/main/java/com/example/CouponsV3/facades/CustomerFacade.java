@@ -168,6 +168,12 @@ public class CustomerFacade extends ClientFacade {
 		return customersByCoupon;
 	}
 	public List<Coupon> getAllCoupons(){
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return coupRepo.findAll();
 	}
 	public List<Coupon> getAllCouponsByCategory(Category category){
