@@ -16,7 +16,7 @@ public class CouponsV3Application {
 		Thread lastActionThread = new Thread(job);
 		lastActionThread.start();
 //		(ctx.getBean(Test.class)).testAll();
-//		(ctx.getBean(DBMockUp.class)).generateMockUp();
+		(ctx.getBean(DBMockUp.class)).generateMockUp();
 	}
 
 }

@@ -62,13 +62,18 @@ public class CustomerFacade extends ClientFacade {
 	 *  
 	 * @throws CouponOutOfStockException if the coupon amount is 0
 	 * @throws CouponExpiredException if the coupon end date passed
+	 * @throws CouponDoesntExistException 
 	 */
-	public void purchaseCoupon(Coupon coupon) throws CouponAlreadyPurchasedException,  CouponOutOfStockException, CouponExpiredException {
+	public void purchaseCoupon(Coupon coup) throws CouponAlreadyPurchasedException,  CouponOutOfStockException, CouponExpiredException, CouponDoesntExistException {
+		Coupon coupon = coupRepo.findById(coup.getId()).orElse(null);
+		if(coupon == null) {
+			throw new CouponDoesntExistException("This Coupon Doesnt Exist");
+		}
 		/**
 		 * cant purchase coupon with amount 0 so perform a check and throw an exception if so.
 		 * **check concurrency issues**
 		 */
-		if(coupon.getAmount() == 0) { 
+		if(coupon.getCurrentAmount() == 0) { 
 			throw new CouponOutOfStockException("This coupon ran out :" + coupon.getId());
 		}
 		/**
@@ -88,8 +93,8 @@ public class CustomerFacade extends ClientFacade {
 		 * if a match is found throw an exception.
 		 */
 		
-		for(Coupon coup : getCustomerCoupons()) {
-			if(coupon.getId() == coup.getId()) {
+		for(Coupon c : getCustomerCoupons()) {
+			if(coupon.getId() == c.getId()) {
 				throw new CouponAlreadyPurchasedException("You already bought this coupon!");
 			}
 		}
@@ -97,7 +102,7 @@ public class CustomerFacade extends ClientFacade {
 		if(customer != null) {
 			customer.getCoupons().add(coupon);
 			custRepo.save(customer);
-			coupon.setAmount(coupon.getAmount()-1);
+			coupon.reduceCurrentAmount();
 			coupRepo.save(coupon);
 		}
 		
@@ -168,12 +173,7 @@ public class CustomerFacade extends ClientFacade {
 		return customersByCoupon;
 	}
 	public List<Coupon> getAllCoupons(){
-		try {
-			Thread.sleep(3000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	
 		return coupRepo.findAll();
 	}
 	public List<Coupon> getAllCouponsByCategory(Category category){

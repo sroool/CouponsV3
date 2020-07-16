@@ -169,9 +169,7 @@ public class AdminFacade extends ClientFacade {
 			throw new CustomerDoesntExistException("Error: Customer with id " + customerId + "doesnt exist");
 		}
 		coupRepo.deletePurchaseByCustomerId(customerId);
-		System.out.println("done 1");
 		custRepo.deleteById(customerId); // delete the customer
-		System.out.println("done 2");
 	}
 	/**
 	 * Returns all the customers in the database

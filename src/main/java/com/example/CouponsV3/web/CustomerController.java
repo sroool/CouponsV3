@@ -64,6 +64,7 @@ public class CustomerController {
 	}
 	@GetMapping("/all-coupons/{token}")
 	public ResponseEntity<?> getAllCoupons(@PathVariable String token){
+		
 		Session session = sessions.get(token);
 		if(session == null) {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("UNAUTHORIZED!");
@@ -86,7 +87,7 @@ public class CustomerController {
 		try {
 			facade.purchaseCoupon(coupon);
 			return ResponseEntity.ok("Purchased!");
-		} catch (CouponAlreadyPurchasedException | CouponOutOfStockException | CouponExpiredException e) {
+		} catch (CouponAlreadyPurchasedException | CouponOutOfStockException | CouponExpiredException | CouponDoesntExistException e) {
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}
 	}

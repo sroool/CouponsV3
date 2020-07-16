@@ -113,7 +113,7 @@ public class OfirTest {
 		Coupon coupyb4 = new Coupon(compy2.getId(), Category.Fashion, "titleb4", "description4",
 				new Date(start.getTimeInMillis()), new Date(end.getTimeInMillis()), 6, 423, "image");
 
-		Coupon coupyc1 = new Coupon(compy3.getId(), Category.Vacation, "titlec", "description", new Date(start.getTimeInMillis()),
+		Coupon coupyc1 = new Coupon(compy3.getId(), Category.Furniture, "titlec", "description", new Date(start.getTimeInMillis()),
 				new Date(end.getTimeInMillis()), 10, 100, "image");
 		start.set(2021, 6, 11);
 		end.set(2023, 0, 1);

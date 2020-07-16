@@ -30,9 +30,7 @@ public class LoginController {
 	private Map<String, Session> sessions;
 	@PostMapping("{email}/{password}/{clientType}")
 	public ResponseEntity<?> login(@PathVariable String email, @PathVariable String password, @PathVariable ClientType clientType){
-		System.out.println(email);
-		System.out.println(password);
-		System.out.println(clientType);
+		
 		try {
 			ClientFacade clientFacade = loginManager.login(email, password, clientType);
 			String token = UUID.randomUUID().toString();
