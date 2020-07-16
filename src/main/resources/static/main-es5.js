@@ -9614,7 +9614,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
         this.client = client;
         this.loginService = loginService;
-        this.path = "http://localhost:8080/admin";
+        this.path = "/admin";
       }
 
       _createClass(AdminService, [{
@@ -9872,7 +9872,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
         this.client = client;
         this.loginService = loginService;
-        this.path = "http://localhost:8080/company";
+        this.path = "/company";
       }
 
       _createClass(CompanyService, [{
@@ -9986,7 +9986,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
         this.client = client;
         this.loginService = loginService;
-        this.path = "http://localhost:8080/customer";
+        this.path = "/customer";
       }
 
       _createClass(CustomerService, [{
@@ -10114,7 +10114,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         this.client = client;
         this.snackBar = snackBar;
         this.router = router;
-        this.path = "http://localhost:8080/login";
+        this.path = "/login";
         this.authenticated = 0;
         this.recentlyViewdIds = new Set();
         this.loggedin();

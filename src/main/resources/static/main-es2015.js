@@ -4819,7 +4819,7 @@ class AdminService {
     constructor(client, loginService) {
         this.client = client;
         this.loginService = loginService;
-        this.path = "http://localhost:8080/admin";
+        this.path = "/admin";
     }
     addCompany(company) {
         const path = this.path + "/add-company/" + this.loginService.token;
@@ -4952,7 +4952,7 @@ class CompanyService {
     constructor(client, loginService) {
         this.client = client;
         this.loginService = loginService;
-        this.path = "http://localhost:8080/company";
+        this.path = "/company";
     }
     getCompanyDetails() {
         const path = this.path + "/company-details/" + this.loginService.token;
@@ -5009,7 +5009,7 @@ class CustomerService {
     constructor(client, loginService) {
         this.client = client;
         this.loginService = loginService;
-        this.path = "http://localhost:8080/customer";
+        this.path = "/customer";
     }
     getCustomerDetails() {
         const path = this.path + "/customer-details/" + this.loginService.token;
@@ -5074,7 +5074,7 @@ class LoginService {
         this.client = client;
         this.snackBar = snackBar;
         this.router = router;
-        this.path = "http://localhost:8080/login";
+        this.path = "/login";
         this.authenticated = 0;
         this.recentlyViewdIds = new Set();
         this.loggedin();
