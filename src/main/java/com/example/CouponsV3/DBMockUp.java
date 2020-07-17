@@ -35,6 +35,7 @@ public class DBMockUp {
 	public void generateMockUp() {
 		try {
 			ClearDB();
+			
 			LoginManager loginManager = ctx.getBean(LoginManager.class);
 			AdminFacade adminFacade = (AdminFacade) loginManager.login("admin@admin.com", "admin",
 					ClientType.Administrator);

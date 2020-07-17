@@ -38,6 +38,7 @@ public interface CustomerRepo extends JpaRepository<Customer, Integer> {
 	 */
 	@Transactional
 	@Modifying
-	@Query(value = "ALTER TABLE customers AUTO_INCREMENT = ?1", nativeQuery = true)
+//	@Query(value = "ALTER TABLE customers AUTO_INCREMENT = ?1", nativeQuery = true) mysql query
+	@Query(value = "ALTER SEQUENCE customers_id_seq RESTART WITH ?1;", nativeQuery = true) // postgresql query
 	void resetAutoIncrement(int start);
 }
