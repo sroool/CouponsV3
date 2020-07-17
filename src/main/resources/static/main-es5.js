@@ -10104,7 +10104,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       }, {
         key: "getRecentlyViewed",
         value: function getRecentlyViewed() {
-          return JSON.parse(localStorage.getItem("last-viewed"));
+          return JSON.parse(localStorage.getItem("last-viewed")) || [];
         }
       }, {
         key: "login",

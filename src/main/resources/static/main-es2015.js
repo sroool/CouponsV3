@@ -5077,7 +5077,7 @@ class LoginService {
         this.saveRecentlyViewed();
     }
     getRecentlyViewed() {
-        return JSON.parse(localStorage.getItem("last-viewed"));
+        return JSON.parse(localStorage.getItem("last-viewed")) || [];
     }
     login(email, password, clientType) {
         const path = this.path + "/" + email + "/" + password + "/" + clientType;
