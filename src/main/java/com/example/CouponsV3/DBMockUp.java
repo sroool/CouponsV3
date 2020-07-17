@@ -31,7 +31,31 @@ import com.example.CouponsV3.facades.LoginManager;
 public class DBMockUp {
 	@Autowired
 	private ConfigurableApplicationContext ctx;
+	/**
+	 * Helper method to clear the db before each test and reset the auto increment
+	 * of every table to 1. to remove also delete the methods from the DAO's,
+	 * DBDAO's and admin facade.
+	 * 
+	 * @throws SQLException
+	 * @throws IncorrectCredentialsException
+	 */
+	public void ClearDB() throws SQLException, IncorrectCredentialsException {
+		LoginManager manager = ctx.getBean(LoginManager.class);
+		AdminFacade admin = (AdminFacade) manager.login("admin@admin.com", "admin", ClientType.Administrator);
 
+		try {
+			for (Company company : admin.getAllCompanies()) {
+				admin.deleteCompany(company.getId());
+			}
+			for (Customer customer : admin.getAllCustomers()) {
+				admin.deleteCustomer(customer.getId());
+			}
+			System.out.println("done deleting");
+			admin.resetAutoIncrement(1);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
 	public void generateMockUp() {
 		try {
 			ClearDB();
@@ -1105,28 +1129,5 @@ public class DBMockUp {
 		return ((int) (Math.random() * 2) ) == 1 ? true : false;
 	}
 
-	/**
-	 * Helper method to clear the db before each test and reset the auto increment
-	 * of every table to 1. to remove also delete the methods from the DAO's,
-	 * DBDAO's and admin facade.
-	 * 
-	 * @throws SQLException
-	 * @throws IncorrectCredentialsException
-	 */
-	public void ClearDB() throws SQLException, IncorrectCredentialsException {
-		LoginManager manager = ctx.getBean(LoginManager.class);
-		AdminFacade admin = (AdminFacade) manager.login("admin@admin.com", "admin", ClientType.Administrator);
-
-		try {
-			for (Company company : admin.getAllCompanies()) {
-				admin.deleteCompany(company.getId());
-			}
-			for (Customer customer : admin.getAllCustomers()) {
-				admin.deleteCustomer(customer.getId());
-			}
-
-			admin.resetAutoIncrement(1);
-		} catch (Exception e) {
-		}
-	}
+	
 }

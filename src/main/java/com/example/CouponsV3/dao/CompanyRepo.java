@@ -39,7 +39,7 @@ public interface CompanyRepo extends JpaRepository<Company, Integer> {
 	@Transactional
 	@Modifying
 //	@Query(value = "ALTER TABLE companies AUTO_INCREMENT = ?1", nativeQuery = true) // MySql query
-	@Query(value = "ALTER SEQUENCE companies_id_seq RESTART WITH ?1;", nativeQuery = true) // postgresql query
+	@Query(value = "ALTER SEQUENCE companies_id_seq RESTART WITH 1", nativeQuery = true) // postgresql query
 	void resetAutoIncrement(int start);
 	
 }
