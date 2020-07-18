@@ -201,6 +201,9 @@ public class Coupon {
 	public void reduceCurrentAmount() {
 		this.currentAmount = ( currentAmount - 1);
 	}
+	public void increaseCurrentAmount() {
+		this.currentAmount = ( currentAmount + 1);
+	}
 	@Override
 	public String toString() {
 		return "Coupon [id=" + id + ", companyId=" + companyId + ", category=" + category + ", title=" + title

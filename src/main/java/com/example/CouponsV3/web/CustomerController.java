@@ -35,7 +35,6 @@ public class CustomerController {
 			CustomerFacade facade = (CustomerFacade) sessions.get(token).getClientFacade();
 			return ResponseEntity.ok(facade.getCustomerDetails());
 		}
-		System.out.println("blocked by customer controller");
 		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("UNAUTHORIZED!");
 	}
 

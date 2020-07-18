@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import com.example.CouponsV3.beans.Company;
+import com.example.CouponsV3.beans.Coupon;
 import com.example.CouponsV3.beans.Customer;
 import com.example.CouponsV3.exceptions.CompanyDoesntExistException;
 import com.example.CouponsV3.exceptions.CompanyEmailAlreadyExistsException;
@@ -167,6 +168,10 @@ public class AdminFacade extends ClientFacade {
 		Customer customer = custRepo.findById(customerId).orElse(null);
 		if(customer == null) {
 			throw new CustomerDoesntExistException("Error: Customer with id " + customerId + "doesnt exist");
+		}
+		for(Coupon coupon : customer.getCoupons()) {
+			coupon.increaseCurrentAmount();
+			coupRepo.save(coupon);
 		}
 		coupRepo.deletePurchaseByCustomerId(customerId);
 		custRepo.deleteById(customerId); // delete the customer

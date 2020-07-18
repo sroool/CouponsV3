@@ -46,7 +46,6 @@ public class AdminController {
 
 	@PostMapping("/update-company/{token}")
 	public ResponseEntity<?> updateCompany(@PathVariable String token, @RequestBody Company company) {
-		System.out.println(company);
 		try {
 			return ResponseEntity.ok(facade.updateCompany(company));
 		} catch (CompanyEmailAlreadyExistsException | CompanyDoesntExistException | CompanyNameChangedException e) {
@@ -71,7 +70,6 @@ public class AdminController {
 
 	@PostMapping("/add-customer/{token}")
 	public ResponseEntity<?> addCustomer(@PathVariable String token, @RequestBody Customer customer) {
-		System.out.println(customer);
 		try {
 			return ResponseEntity.ok(facade.addCustomer(customer));
 		} catch (CustomerEmailAlreadyExistsException e) {
@@ -82,7 +80,6 @@ public class AdminController {
 
 	@PostMapping("/update-customer/{token}")
 	public ResponseEntity<?> updateCustomer(@PathVariable String token, @RequestBody Customer customer) {
-		System.out.println(customer);
 		try {
 			return ResponseEntity.ok(facade.updateCustomer(customer));
 		} catch (CustomerDoesntExistException e) {

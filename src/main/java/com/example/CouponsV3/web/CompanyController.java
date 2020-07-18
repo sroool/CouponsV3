@@ -36,7 +36,6 @@ public class CompanyController {
 		if (session != null) {
 			CompanyFacade facade = (CompanyFacade) session.getClientFacade();
 			Company company = facade.getCompanyDetails();
-			System.out.println(company);
 			return ResponseEntity.ok(company);
 		}
 		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("UNAUTHORIZED!");

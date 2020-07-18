@@ -48,12 +48,6 @@ public class LoginController {
 	}
 	@PostMapping("/loggedin/{token}")
 	public ResponseEntity<?> loggedin(@PathVariable String token){
-//		try {
-//			Thread.sleep(3000);
-//		} catch (InterruptedException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
 		if(sessions.get(token) != null) {
 			ClientFacade cf = sessions.get(token).getClientFacade();
 			

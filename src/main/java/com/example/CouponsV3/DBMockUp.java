@@ -64,7 +64,7 @@ public class DBMockUp {
 			AdminFacade adminFacade = (AdminFacade) loginManager.login("admin@admin.com", "admin",
 					ClientType.Administrator);
 			// FOOD COMPANIES
-			Company company1 = new Company("culinia", "culinia@culinia.com", "culunia1234");
+			Company company1 = new Company("culinia", "culinia@culinia.com", "culinia1234");
 			Company company2 = new Company("vegetard", "vegetard@vegetard.com", "vegetard1234");
 			Company company3 = new Company("foodate", "foodate@foodate.com", "foodate1234");
 
@@ -72,7 +72,7 @@ public class DBMockUp {
 			adminFacade.addCompany(company2);
 			adminFacade.addCompany(company3);
 
-			CompanyFacade companyFacade1 = (CompanyFacade) loginManager.login("culinia@culinia.com", "culunia1234",
+			CompanyFacade companyFacade1 = (CompanyFacade) loginManager.login("culinia@culinia.com", "culinia1234",
 					ClientType.Company);
 			CompanyFacade companyFacade2 = (CompanyFacade) loginManager.login("vegetard@vegetard.com", "vegetard1234",
 					ClientType.Company);
@@ -284,7 +284,7 @@ public class DBMockUp {
 			// ELECTRONICS COMPANIES COUPONS
 			Coupon coupon16 = new Coupon(company4Id, Category.Electricity, "OLD SCHOOL BoomBox", "Hip retro boombox",
 					today, new Date(System.currentTimeMillis() + (dayInMillis * 2)), 35, randomPrice(10, 20),
-					"assets/images/apple.webp");
+					"assets/images/boom_box.webp");
 			Coupon coupon17 = new Coupon(company4Id, Category.Electricity,
 					"Verbatim CD-R 700MB 80 Minute 52x Recordable Disc - 100 Pack",
 					"100 high-grade non-rewritable CD-R discs with one hundred year archival life", today,
@@ -312,7 +312,7 @@ public class DBMockUp {
 			Coupon coupon22 = new Coupon(company4Id, Category.Electricity, "Xbox Wireless Controller - Black",
 					"Compatible with Xbox One X, Xbox One S, Xbox One, Windows 10", today,
 					new Date(System.currentTimeMillis() + (dayInMillis * 4)), 35, randomPrice(60, 90),
-					"assets/images/apple.webp");
+					"assets/images/controller.webp");
 			Coupon coupon23 = new Coupon(company4Id, Category.Electricity,
 					"Midea 3.1 Cu. Ft. Compact Refrigerator, WHD-113FSS1 - Stainless Steel",
 					"Midea 3.1 Cu. Ft. Compact Refrigerator, WHD-113FSS1 - Stainless Steel", today,

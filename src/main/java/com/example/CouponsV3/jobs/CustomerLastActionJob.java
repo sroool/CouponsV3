@@ -26,7 +26,6 @@ public class CustomerLastActionJob implements Runnable {
 				long now = System.currentTimeMillis();
 				long noActionTimeLimit = 1000 * 60 * 30;
 				if(now - session.getLastActionTime() >= noActionTimeLimit ) {
-					System.out.println(entry.getKey() + " passed the time limit, deleting");
 					sessions.remove(entry.getKey());
 				}
 			}
