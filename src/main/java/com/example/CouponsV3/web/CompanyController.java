@@ -68,7 +68,6 @@ public class CompanyController {
 		} catch (IOException e) {
 			returnValue = "failure : " + e.getMessage();
 		}
-		System.out.println(returnValue);
 		return returnValue;
 
 	}
