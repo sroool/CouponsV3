@@ -1,5 +1,9 @@
 package com.example.CouponsV3.web;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +16,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.example.CouponsV3.beans.Company;
 import com.example.CouponsV3.beans.Coupon;
@@ -49,6 +55,22 @@ public class CompanyController {
 		} catch (CouponTitleAlreadyExistsException e) {
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}
+	}
+	@PostMapping("/add-coupon-image/{token}")
+	public String uploadImage(@PathVariable String token, @RequestParam("imageFile") MultipartFile imageFile) {
+		String returnValue = "";
+		String folder = "src\\main\\resources\\static\\assets\\images\\";
+		try {
+			byte[] bytes = imageFile.getBytes();
+			Path path = Paths.get(folder + imageFile.getOriginalFilename());
+			Files.write(path, bytes);
+			returnValue = "image saved";
+		} catch (IOException e) {
+			returnValue = "failure : " + e.getMessage();
+		}
+		System.out.println(returnValue);
+		return returnValue;
+
 	}
 
 	@PostMapping("/update-coupon/{token}")
