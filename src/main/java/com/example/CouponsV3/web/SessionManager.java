@@ -21,9 +21,7 @@ public class SessionManager {
 	public void adminControllerMethods() {}
 	
 	@Pointcut("execution(* com.example.CouponsV3.web.CustomerController.*(..))")
-	public void customerControllerMethods() {
-		
-	}
+	public void customerControllerMethods() {}
 	
 	@Pointcut("execution(* com.example.CouponsV3.web.CompanyController.*(..))")
 	public void companyControllerMethods() {}

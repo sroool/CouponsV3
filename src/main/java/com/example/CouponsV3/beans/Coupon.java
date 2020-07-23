@@ -3,6 +3,7 @@
  */
 package com.example.CouponsV3.beans;
 
+import java.io.IOException;
 import java.sql.Date;
 
 import javax.persistence.Entity;
@@ -11,6 +12,17 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import javax.persistence.Table;
+
+
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.SerializerProvider;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
+import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 
 /**
  * Coupon bean class
@@ -35,8 +47,15 @@ public class Coupon {
 	private int originalAmount; // The amount of coupons of this coupon
 	private int currentAmount;
 	private double price; // The price of the coupon
-	private String image; // The path containing an image of the coupon
+	@JsonDeserialize(using = Coupon.DataToBytesDeserializer.class)
+	@JsonSerialize(using = Coupon.BytesToDataSerializer.class)
+	private byte[] imageUrlData; // The path containing an image of the coupon
+
+
 	
+	
+	
+
 	/**
 	 * 
 	 */
@@ -61,7 +80,7 @@ public class Coupon {
 	 * @param image The path containing an image of the coupon
 	 */
 	public Coupon(int companyId, Category category, String title, String description, Date startDate, Date endDate,
-			int originalAmount, double price, String image) {
+			int originalAmount, double price, byte[] imageUrlData) {
 		super();
 		this.companyId = companyId;
 		this.category = category;
@@ -72,7 +91,8 @@ public class Coupon {
 		this.originalAmount = originalAmount;
 		this.currentAmount = originalAmount;
 		this.price = price;
-		this.image = image;
+		
+		this.imageUrlData = imageUrlData;
 	}
 	
 	
@@ -92,7 +112,7 @@ public class Coupon {
 	 * @return the category
 	 */
 	public Category getCategory() {
-		Category.values();
+		
 		return category;
 	}
 	/**
@@ -162,18 +182,22 @@ public class Coupon {
 	public void setPrice(double price) {
 		this.price = price;
 	}
+	
 	/**
-	 * @return the image
+	 * @return the imageUrlData
 	 */
-	public String getImage() {
-		return image;
+	public byte[] getImageUrlData() {
+		return imageUrlData;
 	}
 	/**
-	 * @param image the image to set
+	 * @param imageUrlData the imageUrlData to set
 	 */
-	public void setImage(String image) {
-		this.image = image;
+	public void setImageUrlData(byte[] imageUrlData) {
+		this.imageUrlData = imageUrlData;
 	}
+
+	
+	
 	/**
 	 * @return the orgininalAmount
 	 */
@@ -209,10 +233,46 @@ public class Coupon {
 		return "Coupon [id=" + id + ", companyId=" + companyId + ", category=" + category + ", title=" + title
 				+ ", description=" + description + ", startDate=" + startDate + ", endDate=" + endDate
 				+ ", orgininalAmount=" + originalAmount + ", currentAmount=" + currentAmount + ", price=" + price
-				+ ", image=" + image + "]";
+				+  "]";
 	}
 	
-	
-	
+	public static class BytesToDataSerializer extends StdSerializer<byte[]> {
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 9096760173753538113L;
+		
+		public BytesToDataSerializer() {
+			this(null);
+		
+		}
+		public BytesToDataSerializer(Class<byte[]> t) {
+			super(t);
+		
+		}
+
+		@Override
+		public void serialize(byte[] value, JsonGenerator gen, SerializerProvider provider) throws IOException {
+			gen.writeString(new String(value, "UTF-8"));
+		}
+
+	}
+	public static class DataToBytesDeserializer extends StdDeserializer<byte[]> {
+		private static final long serialVersionUID = 1L;
+		public DataToBytesDeserializer() {
+			this(null);
+		}
+		public DataToBytesDeserializer(Class<byte[]> t) {
+			super(t);
+		}
+		@Override
+		public byte[] deserialize(JsonParser p, DeserializationContext ctxt) throws IOException, JsonProcessingException {
+			// TODO Auto-generated method stub
+			String data = p.getText();
+			return data.getBytes();
+		}
+		
+	}
 	
 }

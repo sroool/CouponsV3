@@ -3,7 +3,6 @@ package com.example.CouponsV3.web;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,20 +29,14 @@ public class CustomerController {
 
 	@GetMapping("/customer-details/{token}")
 	public ResponseEntity<?> getCustomerDetails(@PathVariable String token) {
-		Session session = sessions.get(token);
-		if (session != null) {
-			CustomerFacade facade = (CustomerFacade) sessions.get(token).getClientFacade();
-			return ResponseEntity.ok(facade.getCustomerDetails());
-		}
-		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("UNAUTHORIZED!");
+		CustomerFacade facade = (CustomerFacade) sessions.get(token).getClientFacade();
+		return ResponseEntity.ok(facade.getCustomerDetails());
+	
 	}
 
 	@GetMapping("/coupon-by-id/{token}/{id}")
 	public ResponseEntity<?> getCouponById(@PathVariable String token, @PathVariable int id) {
-		Session session = sessions.get(token);
-		if (session == null) {
-			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("UNAUTHORIZED!");
-		}
+	
 		CustomerFacade facade = (CustomerFacade) sessions.get(token).getClientFacade();
 		try {
 			return ResponseEntity.ok(facade.getCouponById(id));
@@ -65,9 +58,6 @@ public class CustomerController {
 	public ResponseEntity<?> getAllCoupons(@PathVariable String token){
 		
 		Session session = sessions.get(token);
-		if(session == null) {
-			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("UNAUTHORIZED!");
-		}
 		CustomerFacade facade = (CustomerFacade) session.getClientFacade();
 		return ResponseEntity.ok(facade.getAllCoupons());
 	}
@@ -79,9 +69,6 @@ public class CustomerController {
 	@PostMapping("/purchase-coupon/{token}")
 	public ResponseEntity<?> purchaseCoupon(@PathVariable String token,@RequestBody Coupon coupon){
 		Session session = sessions.get(token);
-		if(session == null) {
-			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("UNAUTHORIZED!");
-		}
 		CustomerFacade facade = (CustomerFacade) session.getClientFacade();
 		try {
 			facade.purchaseCoupon(coupon);

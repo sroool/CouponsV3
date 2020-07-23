@@ -71,6 +71,7 @@ public class CompanyFacade extends ClientFacade {
 				throw new CouponTitleAlreadyExistsException("A coupon with this title already exists");
 			}
 		}
+		
 		return coupRepo.save(coupon);// otherwise add the coupon
 	}
 	
@@ -155,6 +156,7 @@ public class CompanyFacade extends ClientFacade {
 		if(company != null) {
 			this.company = company;
 		}
+	
 		return this.company;
 	}
 	

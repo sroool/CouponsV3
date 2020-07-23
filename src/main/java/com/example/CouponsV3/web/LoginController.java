@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.CouponsV3.exceptions.IncorrectCredentialsException;
-import com.example.CouponsV3.facades.AdminFacade;
 import com.example.CouponsV3.facades.ClientFacade;
 import com.example.CouponsV3.facades.ClientType;
 import com.example.CouponsV3.facades.CompanyFacade;
