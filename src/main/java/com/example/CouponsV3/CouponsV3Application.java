@@ -26,7 +26,7 @@ public class CouponsV3Application {
 //			e.printStackTrace();
 //		}
 //		(ctx.getBean(Test.class)).testAll();
-//		(ctx.getBean(DBMockUp.class)).generateMockUp();
+		(ctx.getBean(DBMockUp.class)).generateMockUp();
 	}
 
 }
