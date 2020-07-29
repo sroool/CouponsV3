@@ -47,8 +47,7 @@ public class Coupon {
 	private int originalAmount; // The amount of coupons of this coupon
 	private int currentAmount;
 	private double price; // The price of the coupon
-	@JsonDeserialize(using = Coupon.DataToBytesDeserializer.class)
-	@JsonSerialize(using = Coupon.BytesToDataSerializer.class)
+
 	private byte[] imageUrlData; // The path containing an image of the coupon
 
 
@@ -236,43 +235,5 @@ public class Coupon {
 				+  "]";
 	}
 	
-	public static class BytesToDataSerializer extends StdSerializer<byte[]> {
-
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = 9096760173753538113L;
-		
-		public BytesToDataSerializer() {
-			this(null);
-		
-		}
-		public BytesToDataSerializer(Class<byte[]> t) {
-			super(t);
-		
-		}
-
-		@Override
-		public void serialize(byte[] value, JsonGenerator gen, SerializerProvider provider) throws IOException {
-			gen.writeString(new String(value, "UTF-8"));
-		}
-
-	}
-	public static class DataToBytesDeserializer extends StdDeserializer<byte[]> {
-		private static final long serialVersionUID = 1L;
-		public DataToBytesDeserializer() {
-			this(null);
-		}
-		public DataToBytesDeserializer(Class<byte[]> t) {
-			super(t);
-		}
-		@Override
-		public byte[] deserialize(JsonParser p, DeserializationContext ctxt) throws IOException, JsonProcessingException {
-			// TODO Auto-generated method stub
-			String data = p.getText();
-			return data.getBytes();
-		}
-		
-	}
 	
 }
