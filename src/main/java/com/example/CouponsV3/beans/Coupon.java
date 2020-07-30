@@ -3,7 +3,6 @@
  */
 package com.example.CouponsV3.beans;
 
-import java.io.IOException;
 import java.sql.Date;
 
 import javax.persistence.Entity;
@@ -14,15 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.DeserializationContext;
-import com.fasterxml.jackson.databind.SerializerProvider;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
-import com.fasterxml.jackson.databind.ser.std.StdSerializer;
+
 
 /**
  * Coupon bean class

@@ -6,7 +6,7 @@ package com.example.CouponsV3.beans;
  *
  */
 public enum Category {
-	Food, Electricity, Fashion, Pets, Tourism, Furniture, Spa;
+	Food, Electricity, Fashion, Pets, Furniture, Spa;
 	
 	
 }

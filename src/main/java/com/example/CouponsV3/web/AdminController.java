@@ -25,7 +25,7 @@ import com.example.CouponsV3.exceptions.CustomerEmailAlreadyExistsException;
 import com.example.CouponsV3.facades.AdminFacade;
 
 /**
- * @author israe
+ * @author israel
  *
  */
 @RestController

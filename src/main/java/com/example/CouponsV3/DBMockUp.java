@@ -47,11 +47,12 @@ public class DBMockUp {
 	 * @throws SQLException
 	 * @throws IncorrectCredentialsException
 	 */
-	public void ClearDB() throws SQLException, IncorrectCredentialsException {
+	public void ClearDB()  {
+		System.out.println("CLEAR DB STARTED");
 		LoginManager manager = ctx.getBean(LoginManager.class);
-		AdminFacade admin = (AdminFacade) manager.login("admin@admin.com", "admin", ClientType.Administrator);
 
 		try {
+			AdminFacade admin = (AdminFacade) manager.login("admin@admin.com", "admin", ClientType.Administrator);
 			for (Company company : admin.getAllCompanies()) {
 				admin.deleteCompany(company.getId());
 			}
@@ -61,12 +62,13 @@ public class DBMockUp {
 			System.out.println("done deleting");
 			admin.resetAutoIncrement(1);
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			System.out.println("ERROR: " + e.getMessage());
 		}
 	}
 	public void generateMockUp() {
 		try {
 			ClearDB();
+			System.out.println("CLEARED DB");
 			File imagesDir = new File("src//main//resources//static//assets//images");
 			File[] images = imagesDir.listFiles();
 			if(imagesDir == null || images.length ==0) {
@@ -1149,7 +1151,7 @@ public class DBMockUp {
 			}
 			System.out.println("mockup done");
 
-		} catch (SQLException | IncorrectCredentialsException | CompanyNameAlreadyExistsException
+		} catch ( IncorrectCredentialsException | CompanyNameAlreadyExistsException
 				| CompanyEmailAlreadyExistsException | CouponTitleAlreadyExistsException
 				| CustomerEmailAlreadyExistsException | CouponAlreadyPurchasedException | CouponOutOfStockException
 				| CouponExpiredException | CouponDoesntExistException e) {
