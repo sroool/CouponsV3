@@ -10,7 +10,7 @@ import com.example.CouponsV3.dao.CouponRepo;
 public class CouponExpirationDailyJob implements Runnable {
 	@Autowired
 	private CouponRepo coupRepo;
-	private boolean quit;
+	private boolean quit; // a switch used to 'kill' the expiration job
 
 	/**
 	 * CouponExpirationDailyJob CTOR
@@ -21,8 +21,7 @@ public class CouponExpirationDailyJob implements Runnable {
 	}
 
 	/**
-	 * loops over all the coupons in the db and deletes those who are expired and
-	 * their purchase records.
+	 * uses custom queries to delete all the expired purchases along with the coupons themselves
 	 */
 	@Override
 	public void run() {

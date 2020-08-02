@@ -27,7 +27,7 @@ import com.example.CouponsV3.exceptions.CouponTitleAlreadyExistsException;
 @Service
 @Scope("prototype")
 public class CompanyFacade extends ClientFacade {
-	private Company company; // The currently logged in company id
+	private int companyId; // The currently logged in company id
 	
 	/**
 	 * CompanyFacade CTOR
@@ -48,7 +48,7 @@ public class CompanyFacade extends ClientFacade {
 	public boolean login(String email, String password){
 		Company comp = compRepo.findByEmailAndPassword(email, password).orElse(null); // use the company repo to query a company with this email and password
 		if(comp != null) { // check if the Optional object contains the company
-			company = comp; // if so use the get method to get the company and then its id
+			companyId = comp.getId(); // if so use the get method to get the company and then its id
 			return true; // return true for correct login
 		}
 		return false; // return false in case no corresponding company was found
@@ -97,7 +97,7 @@ public class CompanyFacade extends ClientFacade {
 		if(coupByTitle != null && coupByTitle.getId() != coupon.getId()) {
 			throw new CouponTitleAlreadyExistsException("A coupon with this title already exists");
 		}
-		return coupRepo.save(coupon); // Update the coupon to the database if not
+		return coupRepo.save(coupon); 
 	}
 	
 	/**
@@ -120,7 +120,7 @@ public class CompanyFacade extends ClientFacade {
 	 * @return all the company coupons in the database
 	 */
 	public List<Coupon> getCompanyCoupons() {
-		Company company = compRepo.findById(this.company.getId()).orElse(null);
+		Company company = compRepo.findById(this.companyId).orElse(null);
 		if(company != null) {
 			return company.getCoupons();
 		}
@@ -133,7 +133,7 @@ public class CompanyFacade extends ClientFacade {
 	 * @return all the company coupons of that category
 	 */
 	public List<Coupon> getCompanyCoupons(Category category) {
-		return coupRepo.findByCompanyIdAndCategory(this.company.getId(), category);
+		return coupRepo.findByCompanyIdAndCategory(this.companyId, category);
 	}
 	
 	/**
@@ -143,21 +143,17 @@ public class CompanyFacade extends ClientFacade {
 	 * @return all the company coupons up to that price
 	 */
 	public List<Coupon> getCompanyCoupons(double maxPrice) {
-		return coupRepo.findByCompanyIdAndPriceLessThan(this.company.getId(), maxPrice);
+		return coupRepo.findByCompanyIdAndPriceLessThan(this.companyId, maxPrice);
 	}
 	/**
 	 * Returns the currently logged in company
 	 * 
 	 * @return the currently logged in company
-	 * @throws CompanyDoesntExistException
+	
 	 */
 	public Company getCompanyDetails() {
-		Company company = compRepo.findById(this.company.getId()).orElse(null);
-		if(company != null) {
-			this.company = company;
-		}
-	
-		return this.company;
+		Company company = compRepo.findById(this.companyId).orElse(null);
+		return company;
 	}
 	
 	public Set<Customer> getAllClients(){
@@ -165,7 +161,7 @@ public class CompanyFacade extends ClientFacade {
 		Set<Customer> clients = new HashSet<Customer>();
 		for(Customer customer : customers) {
 			for(Coupon coupon : customer.getCoupons()) {
-				if(coupon.getCompanyId() == this.company.getId()) {
+				if(coupon.getCompanyId() == this.companyId) {
 					clients.add(customer);
 				}
 			}

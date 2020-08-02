@@ -39,7 +39,7 @@ public class Coupon {
 	private int currentAmount;
 	private double price; // The price of the coupon
 
-	private byte[] imageUrlData; // The path containing an image of the coupon
+	private byte[] imageUrlData; // A byte array containing the information of the coupon image
 
 
 	

@@ -50,13 +50,13 @@ public class LoginController {
 		if(sessions.get(token) != null) {
 			ClientFacade cf = sessions.get(token).getClientFacade();
 			
-			
 			if(cf instanceof CompanyFacade)
-				return ResponseEntity.ok(((CompanyFacade)cf).getCompanyDetails());
+				return ResponseEntity.ok("Company");
 			else if(cf instanceof CustomerFacade)
-				return ResponseEntity.ok( ((CustomerFacade)cf).getCustomerDetails() );
+				return ResponseEntity.ok("Customer");
 			else
-				return ResponseEntity.ok( true );
+				return ResponseEntity.ok( "Administrator" );
+			
 			
 		}
 		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(false);

@@ -39,6 +39,9 @@ public class SessionManager {
 			session.setLastActionTime(System.currentTimeMillis());
 			return result;
 		} catch (Throwable e) {
+			if(e.getClass().getSimpleName().equals("ClassCastException")) {
+				return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("UNAUTHORIZED");
+			}
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}
 	}

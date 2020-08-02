@@ -47,7 +47,7 @@ public class AdminFacade extends ClientFacade {
 	 * Accepts an instance of a company as an argument and adds it to the database
 	 * 
 	 * @param company The instance of the company to add to the database
-	 * @return 
+	 * @return The newly added company with updated id
 	 * @throws CompanyNameAlreadyExistsException if a company with this name already exists
 	 * @throws CompanyEmailAlreadyExistsException if a company with this email already exists
 	 */
@@ -69,7 +69,7 @@ public class AdminFacade extends ClientFacade {
 	 * Accepts an instance of a company as an argument and updates it in the database
 	 * 
 	 * @param company The instance of the company to update in the database
-	 * @return 
+	 * @return The updated company with updated data
 	 * @throws CompanyDoesntExistException if a company with this id doesnt exist
 	 * @throws CompanyNameChangedException if a company name change was attempted
 	 * @throws CompanyEmailAlreadyExistsException 
@@ -133,7 +133,7 @@ public class AdminFacade extends ClientFacade {
 	 * Accepts an instance of a customer as an argument and adds it to the database 
 	 *  
 	 * @param customer The instance of the customer to add to the database
-	 * @return 
+	 * @return The newly added customer with updated id
 	 * @throws CustomerEmailAlreadyExistsException if customer in the database already has this email
 	 */
 	public Customer addCustomer(Customer customer) throws  CustomerEmailAlreadyExistsException {
@@ -148,7 +148,7 @@ public class AdminFacade extends ClientFacade {
 	 * Accepts an instance of a customer as an argument and updates it in the database
 	 * 
 	 * @param customer The instance of the customer to update in the database
-	 * @return 
+	 * @return The updated customer with updated data
 	 * @throws CustomerDoesntExistException if a customer with this id doesnt exist
 	 */
 	public Customer updateCustomer(Customer customer) throws CustomerDoesntExistException {
@@ -197,12 +197,12 @@ public class AdminFacade extends ClientFacade {
 		}
 		return customer;
 	}
-//	/**
-//	 * Helper method to reset the auto increment of all the tables in the db.
-//	 * for testing.
-//	 * @param start the value to reset to
-//	 * @throws SQLException
-//	 */
+	/**
+	 * Helper method to reset the auto increment of all the tables in the db.
+	 * for testing.
+	 * @param start the value to reset to
+	 * @throws SQLException
+	 */
 	public void resetAutoIncrement(int start) {
 		compRepo.resetAutoIncrement(start);
 		coupRepo.resetAutoIncrement(start);

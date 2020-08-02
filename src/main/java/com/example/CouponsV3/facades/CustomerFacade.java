@@ -26,7 +26,7 @@ import com.example.CouponsV3.facades.ClientFacade;
 @Service
 @Scope("prototype")
 public class CustomerFacade extends ClientFacade {
-	private int customerId;
+	private int customerId; // the id of the currently active customer
 	
 	/**
 	 * CustomerFacade CTOR

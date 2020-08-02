@@ -14,10 +14,13 @@ public class CouponsV3Application {
 
 	public static void main(String[] args) {
 		ConfigurableApplicationContext ctx = SpringApplication.run(CouponsV3Application.class, args);
+		
 		(ctx.getBean(DBMockUp.class)).generateMockUp();
+		
 		CouponExpirationDailyJob job1 = ctx.getBean(CouponExpirationDailyJob.class);
 		Thread expirationThread = new Thread(job1);
 		expirationThread.start();
+		
 		CustomerLastActionJob job2 = ctx.getBean(CustomerLastActionJob.class);
 		Thread lastActionThread = new Thread(job2);
 		lastActionThread.start();

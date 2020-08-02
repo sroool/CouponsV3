@@ -21,7 +21,7 @@ public class LoginManager {
 	 * @param email the email of the Client trying to log in
 	 * @param password the password of the Client trying to log in
 	 * @param clientType the clientType of the Client trying to log in
-	 * @return an instance of AdminFacade, CompanyFacade or ClientFacde if the credentials are correct or null if not
+	 * @return an instance of AdminFacade, CompanyFacade or ClientFacde if the credentials are correct 
 	 * @throws IncorrectCredentialsException
 	 */
 	public ClientFacade login(String email, String password, ClientType clientType)  throws IncorrectCredentialsException{
@@ -31,22 +31,22 @@ public class LoginManager {
 			if(adminF.login(email, password)) {
 				return adminF;
 			}
-			throw new IncorrectCredentialsException();
+			break;
 		
 		case Company:
 			CompanyFacade compF = ctx.getBean(CompanyFacade.class);
 			if(compF.login(email, password)) {
 				return compF;
 			}
-			throw new IncorrectCredentialsException();
+			break;
 			
 		case Customer:
 			CustomerFacade custF = ctx.getBean(CustomerFacade.class);
 			if(custF.login(email, password)) {
 				return custF;
 			}
-			throw new IncorrectCredentialsException();
+			break;
 		}
-		return null;
+		throw new IncorrectCredentialsException();
 	}
 }

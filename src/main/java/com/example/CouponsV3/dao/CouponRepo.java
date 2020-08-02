@@ -79,21 +79,21 @@ public interface CouponRepo extends JpaRepository<Coupon, Integer> {
 	 * Returns entries from coupons by company_id and category 
 	 * @param companyId
 	 * @param category
-	 * @return
+	 * @return List of coupons found
 	 */
 	List<Coupon> findByCompanyIdAndCategory(int companyId, Category category);
 	/**
 	 * Returns entries from coupons by company_id and category 
 	 * @param companyId
 	 * @param category
-	 * @return
+	 * @return List of coupons found
 	 */
 	List<Coupon> findByCompanyIdAndPriceLessThan(int companyId, double maxPrice);
 	/**
 	 * Returns entries from coupons by customer_id from customers_vs_coupons and category using JOIN
 	 * @param customerId
 	 * @param category
-	 * @return
+	 * @return Set of coupons found
 	 */
 	@Query(value = "SELECT * FROM coupons d JOIN customers_vs_coupons c ON c.coupon_id=d.id WHERE c.customer_id= ?1 AND d.category = ?2", nativeQuery = true) // MySQL and postgresql query
 	Set<Coupon> findByCustomerIdAndCategory(int customerId, int category);
@@ -101,7 +101,7 @@ public interface CouponRepo extends JpaRepository<Coupon, Integer> {
 	 * Returns entries from coupons by customer_id from customers_vs_coupons and a given maximum price
 	 * @param customerId
 	 * @param maxPrice
-	 * @return
+	 * @return Set of coupons found
 	 */
 	@Query(value = "SELECT * FROM coupons d JOIN customers_vs_coupons c ON c.coupon_id=d.id WHERE c.customer_id= ?1 AND d.price <= ?2", nativeQuery = true) // MySQL and postgresql query
 	Set<Coupon> findByCustomerIdAndMaxprice(int customerId, double maxPrice);

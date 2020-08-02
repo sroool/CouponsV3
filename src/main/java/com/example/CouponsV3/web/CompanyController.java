@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.example.CouponsV3.beans.Company;
 import com.example.CouponsV3.beans.Coupon;
-
 import com.example.CouponsV3.exceptions.CouponCompanyIdChangedException;
 import com.example.CouponsV3.exceptions.CouponDoesntExistException;
 import com.example.CouponsV3.exceptions.CouponTitleAlreadyExistsException;
