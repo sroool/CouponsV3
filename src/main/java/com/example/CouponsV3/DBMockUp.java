@@ -266,7 +266,7 @@ public class DBMockUp {
 				customerFacade1.purchaseCoupon(coupon);
 				customerFacade2.purchaseCoupon(coupon);
 				customerFacade3.purchaseCoupon(coupon);
-				if (coupon.getCurrentAmount() < 5) {
+				if (coupon.getOriginalAmount() < 5) {
 					continue;
 				}
 				customerFacade4.purchaseCoupon(coupon);
@@ -283,7 +283,7 @@ public class DBMockUp {
 			}
 			for (Coupon coupon : companyFacade3Coupons) {
 				customerFacade1.purchaseCoupon(coupon);
-				if (coupon.getCurrentAmount() < 5) {
+				if (coupon.getOriginalAmount() < 5) {
 					continue;
 				}
 				customerFacade2.purchaseCoupon(coupon);

@@ -36,7 +36,7 @@ public class Coupon {
 	private Date startDate; // The start date of the coupon
 	private Date endDate; // The expiry end date of the coupon
 	private int originalAmount; // The amount of coupons of this coupon
-	private int currentAmount;
+	private int bought; // how many coupons were bought
 	private double price; // The price of the coupon
 
 	private byte[] imageUrlData; // A byte array containing the information of the coupon image
@@ -79,7 +79,7 @@ public class Coupon {
 		this.startDate = startDate;
 		this.endDate = endDate;
 		this.originalAmount = originalAmount;
-		this.currentAmount = originalAmount;
+		this.bought = 0;
 		this.price = price;
 		
 		this.imageUrlData = imageUrlData;
@@ -200,29 +200,35 @@ public class Coupon {
 	public void setOriginalAmount(int originalAmount) {
 		this.originalAmount = originalAmount;
 	}
-	/**
-	 * @return the currentAmount
-	 */
-	public int getCurrentAmount() {
-		return currentAmount;
+	public void reduceAmount() {
+		this.originalAmount = (originalAmount - 1);
+	}
+	public void increaseAmount() {
+		this.originalAmount = ( originalAmount + 1);
 	}
 	/**
-	 * @param currentAmount the currentAmount to set
+	 * @return how many coupons were bought
 	 */
-	public void setCurrentAmount(int currentAmount) {
-		this.currentAmount = currentAmount;
+	public int getBought() {
+		return bought;
 	}
-	public void reduceCurrentAmount() {
-		this.currentAmount = ( currentAmount - 1);
+	/**
+	 * @param bought the amount of bought coupons to set
+	 */
+	public void setBought(int bought) {
+		this.bought = bought;
 	}
-	public void increaseCurrentAmount() {
-		this.currentAmount = ( currentAmount + 1);
+	public void reduceBought() {
+		this.bought = ( bought - 1);
+	}
+	public void increaseBought() {
+		this.bought = ( bought + 1);
 	}
 	@Override
 	public String toString() {
 		return "Coupon [id=" + id + ", companyId=" + companyId + ", category=" + category + ", title=" + title
 				+ ", description=" + description + ", startDate=" + startDate + ", endDate=" + endDate
-				+ ", orgininalAmount=" + originalAmount + ", currentAmount=" + currentAmount + ", price=" + price
+				+ ", orgininalAmount=" + originalAmount + ", currentAmount=" + bought + ", price=" + price
 				+  "]";
 	}
 	

@@ -73,8 +73,8 @@ public class CustomerFacade extends ClientFacade {
 		 * cant purchase coupon with amount 0 so perform a check and throw an exception if so.
 		 * **check concurrency issues**
 		 */
-		if(coupon.getCurrentAmount() == 0) { 
-			throw new CouponOutOfStockException("This coupon ran out :" + coupon.getId());
+		if(coupon.getOriginalAmount() == 0) { 
+			throw new CouponOutOfStockException("This coupon ran out");
 		}
 		/**
 		 * cant purchase an expired coupon 
@@ -102,7 +102,8 @@ public class CustomerFacade extends ClientFacade {
 		if(customer != null) {
 			customer.getCoupons().add(coupon);
 			custRepo.save(customer);
-			coupon.reduceCurrentAmount();
+			coupon.increaseBought();
+			coupon.reduceAmount();
 			coupRepo.save(coupon);
 		}
 		

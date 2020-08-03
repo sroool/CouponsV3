@@ -175,7 +175,8 @@ public class AdminFacade extends ClientFacade {
 			throw new CustomerDoesntExistException("Error: Customer with id " + customerId + "doesnt exist");
 		}
 		for(Coupon coupon : customer.getCoupons()) {
-			coupon.increaseCurrentAmount();
+			coupon.reduceBought();
+			coupon.increaseAmount();
 			coupRepo.save(coupon);
 		}
 		coupRepo.deletePurchaseByCustomerId(customerId);
