@@ -82,7 +82,7 @@ public class AdminController {
 	public ResponseEntity<?> updateCustomer(@PathVariable String token, @RequestBody Customer customer) {
 		try {
 			return ResponseEntity.ok(facade.updateCustomer(customer));
-		} catch (CustomerDoesntExistException e) {
+		} catch (CustomerDoesntExistException | CustomerEmailAlreadyExistsException e) {
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}
 	}

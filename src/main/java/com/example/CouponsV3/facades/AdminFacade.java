@@ -150,11 +150,16 @@ public class AdminFacade extends ClientFacade {
 	 * @param customer The instance of the customer to update in the database
 	 * @return The updated customer with updated data
 	 * @throws CustomerDoesntExistException if a customer with this id doesnt exist
+	 * @throws CustomerEmailAlreadyExistsException 
 	 */
-	public Customer updateCustomer(Customer customer) throws CustomerDoesntExistException {
+	public Customer updateCustomer(Customer customer) throws CustomerDoesntExistException, CustomerEmailAlreadyExistsException {
 		Customer cust = custRepo.findById(customer.getId()).orElse(null); // loads the company from the database by its id
+		Customer custByEmail = custRepo.findByEmail(customer.getEmail()).orElse(null);
 		if(cust == null) { // check that the cust reference isnt null
 			throw new CustomerDoesntExistException("Error: No customer with id " + customer.getId());
+		}
+		if(custByEmail != null && custByEmail.getId() != customer.getId()) {
+			throw new CustomerEmailAlreadyExistsException("this customer email already exists " + customer.getEmail());
 		}
 		return custRepo.save(customer); // update the customer in the database
 	}

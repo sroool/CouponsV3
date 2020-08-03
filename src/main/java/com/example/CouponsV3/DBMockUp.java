@@ -48,7 +48,6 @@ public class DBMockUp {
 	 * @throws IncorrectCredentialsException
 	 */
 	public void ClearDB()  {
-		System.out.println("CLEAR DB STARTED");
 		LoginManager manager = ctx.getBean(LoginManager.class);
 
 		try {
@@ -59,7 +58,6 @@ public class DBMockUp {
 			for (Customer customer : admin.getAllCustomers()) {
 				admin.deleteCustomer(customer.getId());
 			}
-			System.out.println("done deleting");
 			admin.resetAutoIncrement(1);
 		} catch (Exception e) {
 			System.out.println("ERROR: " + e.getMessage());
@@ -68,7 +66,6 @@ public class DBMockUp {
 	public void generateMockUp() {
 		try {
 			ClearDB();
-			System.out.println("CLEARED DB");
 			File imagesDir = new File("src//main//resources//static//assets//images");
 			File[] images = imagesDir.listFiles();
 			if(imagesDir == null || images.length ==0) {
@@ -1149,7 +1146,7 @@ public class DBMockUp {
 					customerFacade11.purchaseCoupon(coupon);					
 				}
 			}
-			System.out.println("mockup done");
+			System.out.println("DONE CREATING TEST COUPONS");
 
 		} catch ( IncorrectCredentialsException | CompanyNameAlreadyExistsException
 				| CompanyEmailAlreadyExistsException | CouponTitleAlreadyExistsException
